@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Star Mission!</title>
+</head>
+<body>
+<canvas id="myCanvas" width="800" height="600" style="position: absolute; left: 0; top: 0;"></canvas>
+<script type="text/javascript">
+var fps =50;		
+var ctxP=document.getElementById('myCanvas').getContext('2d');
+var imgBg = new Image();
+var imgButton = new Image();
+var keyframeButton=1;
+	setInterval(Update,1000/fps);				
+function Update() {
+	document.addEventListener('keydown',checkKeyDown,false)
+	drawBg();
+	drawButton(keyframeButton);
+}	
+function drawBg() {
+	imgBg.src = 'menubg.png';
+	ctxP.drawImage(imgBg,0,0);
+}
+function drawButton(keyframe){
+	imgButton.src = 'button.png';
+	ctxP.drawImage(imgButton,((keyframe-1)*480),0,480,320,0,0,480,320);	
+}
+function checkKeyDown(e){
+	var key = e.keyCode;
+	if(key == 87 || key == 38){
+		keyframeButton=1;
+	}
+	if(key == 83 || key == 40){
+		keyframeButton=2;
+	}
+	if(key == 13 ){
+		if (keyframeButton==1){ 
+			window.location= "gameloop.html";
+		}
+		if (keyframeButton==2){ 
+			window.close();
+		}
+	}
+}
+</script>
+</body>
+</html>

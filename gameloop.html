@@ -1,0 +1,136 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Game Loop</title>
+</head>
+<body>
+<canvas id="myCanvas" width="800" height="600"></canvas>
+<script type="text/javascript">
+	var fps =50;
+	var position = {x:600, y:20,width:200, height:75};
+	var position2 = {x:10, y:530,width:60, height:60};
+	var picRed = {x:0, y:540,width:80, height:53};
+	var picRed2 = {x:550, y:550,width:80, height:53};
+	var timing = 0;
+    var imgBg1 = new Image();
+
+	var ctxP=document.getElementById('myCanvas').getContext('2d');	
+	var imgCannon = new Image();
+	var imgCannon1 = new Image();
+	var imgCannon2 = new Image();
+	var imgCannon3 = new Image();
+	setInterval(Update,1000/fps);
+		
+	function Update(){ 
+		document.addEventListener('keydown',checkKeyDown,false);
+		timing+=0.2;
+	    drawBg(timing)
+		drawCannon(position.x,position.y,position.width,position.height);
+		drawR2(position2.x,position2.y,position2.width,position2.height);
+		drawR1(picRed.x,picRed.y,picRed.width,picRed.height);
+		drawR3(picRed2.x,picRed2.y,picRed2.width,picRed2.height);
+		crash=collision(picRed.x, picRed.y, picRed.width, picRed.height,position.x, position.y, position.width, position.height);
+		if (crash == true){
+			alert("Game Over");
+			position = {x:600, y:20,width:200, height:75};
+			picRed = {x:0, y:540,width:80, height:53};
+            window.location="index.html";			
+		}
+		if ( picRed.x > position.x){
+			picRed.x = picRed.x-0.9;
+		} else {
+			picRed.x = picRed.x+0.9;
+		}
+		if ( picRed.y > position.y){
+			picRed.y = picRed.y-0.9;
+		} else {
+			picRed.y = picRed.y+0.9;
+		}
+		crash=collision1(picRed2.x, picRed2.y, picRed2.width, picRed2.height,position.x, position.y, position.width, position.height);
+		if (crash == true){
+			alert("Game Over");
+			position = {x:600, y:20,width:200, height:75};
+			picRed2 = {x:550, y:550,width:80, height:53};
+            window.location="index.html";			
+		}
+		if ( picRed2.x > position.x){
+			picRed2.x = picRed2.x-0.9;
+		} else {
+			picRed2.x = picRed2.x+0.9;
+		}
+		if ( picRed2.y > position.y){
+			picRed2.y = picRed2.y-0.9;
+		} else {
+			picRed2.y = picRed2.y+0.9;
+		}
+		crash1=collision2(position2.x, position2.y, position2.width, position2.height,position.x, position.y, position.width, position.height);
+		if (crash1 == true){
+			alert("Game Win");
+			position = {x:600, y:20,width:200, height:75};
+			window.location="index.html";
+		}
+		
+
+           
+	}	
+	function checkKeyDown(e){
+		var key = e.keyCode;
+	
+	      if (key == 87){
+			  position.y=position.y-9;
+	 	 }if (key == 83){
+			  position.y=position.y+9;
+	 	 }if (key == 65){
+			  position.x=position.x-9;
+	 	 }if (key == 68){
+			  position.x=position.x+9;
+	 	 }
+	}
+	
+	function drawCannon(posX,posY,width,height){
+		imgCannon.src = "1234.png";
+		ctxP.drawImage(imgCannon,posX,posY,width,height);
+	}
+	function drawR1(posX,posY,width,height){
+		imgCannon1.src = "Missile.png";
+		ctxP.drawImage(imgCannon1,posX,posY,width,height);
+	}
+	function drawR3(posX,posY,width,height){
+		imgCannon3.src = "Missile2.png";
+		ctxP.drawImage(imgCannon3,posX,posY,width,height);
+	}
+	function drawR2(posX,posY,width,height){
+		imgCannon2.src = "helicopterlanding.png";
+		ctxP.drawImage(imgCannon2,posX,posY,width,height);
+	}
+	function collision(posX1,posY1,width1,height1,posX2,posY2,width2,height2){
+	  if (posX1<=posX2+width2 && posX2<=posX1+width1 && posY1<=posY2+height2 && posY2<=posY1+height1){
+			  return true;
+		  }else{
+			  return false;
+		  }		
+	}
+	function collision1(posX1,posY1,width1,height1,posX2,posY2,width2,height2){
+	  if (posX1<=posX2+width2 && posX2<=posX1+width1 && posY1<=posY2+height2 && posY2<=posY1+height1){
+			  return true;
+		  }else{
+			  return false;
+		  }		
+	}
+	function collision2(posX1,posY1,width1,height1,posX2,posY2,width2,height2){
+	  if (posX1<=posX2+width2 && posX2<=posX1+width1 && posY1<=posY2+height2 && posY2<=posY1+height1){
+			  return true;
+		  }else{
+			  return false;
+		  }		
+	}
+	function drawBg(timing) {
+	imgBg1.src = 'sky.jpg';	
+	ctxP.drawImage(imgBg1,0,320-timing/2,480,320,0,0,1600,900);
+}
+
+    
+</script>
+</body>
+</html>
